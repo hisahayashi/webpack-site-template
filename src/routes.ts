@@ -10,7 +10,7 @@ import NotFound from './pages/NotFound.vue'
 
 Vue.use(VueRouter)
 
-const site_title = '板井工務店'
+const site_title = 'Title is Here'
 const site_desc = ''
 const sep = ' | '
 
