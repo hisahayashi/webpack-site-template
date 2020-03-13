@@ -25,7 +25,6 @@ window.jQuery = window.jQuery || {};
 window.$ = window.$ || {};
 
 import Vue from 'vue'
-import SweetScroll from 'sweet-scroll'
 import sleep from '../utils/Sleep'
 import Utils from '../utils/Utils'
 import TheHeader from '../components/TheHeader.vue'
@@ -38,7 +37,6 @@ window.jQuery = $
 window.$ = $
 require('jquery.easing')
 const imagesLoaded = require('imagesloaded')
-let mousewheelevent:any
 
 let Component = Vue.extend({
 

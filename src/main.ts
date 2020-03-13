@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueRouter from './routes'
-import * as VueScrollTo from 'vue-scrollto'
+import VueScrollTo from 'vue-scrollto'
 import ScrollShowDirective from './directive/ScrollShowDirective'
 
 let scrollVars:any = {
@@ -25,6 +25,7 @@ interface Todo {
   id: number
   text: string
 }
+
 interface State {
 }
 
