@@ -69,7 +69,7 @@ let scriptConfig = {
     contentBase: path.join(__dirname, './'),
     watchContentBase: true,
     historyApiFallback: true,
-     host: '0.0.0.0',
+     host: 'localhost',
      disableHostCheck: true,
     port: 3000,
     noInfo: true
@@ -112,7 +112,7 @@ let styleConfig = {
             use: [
               {
                 loader: 'css-loader',
-                // options: {sourceMap: true}
+                options: {url: false}
               },
               {
                 loader: 'postcss-loader',

@@ -11,4 +11,4 @@
 
 ### Site URL
 
-[http://hoge.jp](http://hoge.jp)
+[http://localhost:3000](http://localhost:3000)
