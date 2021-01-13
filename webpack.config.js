@@ -1,7 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 
 let scriptConfig = {
@@ -13,8 +12,7 @@ let scriptConfig = {
     filename: 'main.js'
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: 'vue-loader',
         include: [
@@ -22,7 +20,7 @@ let scriptConfig = {
         ],
         exclude: /node_modules/,
         options: {
-          loaders: {
+          rules: {
             esModule: true,
             // Since sass-loader (weirdly) has SCSS as its default parse mode, we map
             // the "scss" and "sass" values for the lang attribute to the right configs here.
@@ -69,15 +67,14 @@ let scriptConfig = {
     contentBase: path.join(__dirname, './'),
     watchContentBase: true,
     historyApiFallback: true,
-     host: 'localhost',
-     disableHostCheck: true,
+    host: 'localhost',
+    disableHostCheck: true,
     port: 3000,
     noInfo: true
   },
   performance: {
     hints: false
   },
-  devtool: '#inline-source-map',
   plugins: [
     new VueLoaderPlugin(),
     new webpack.DefinePlugin({
@@ -100,35 +97,27 @@ let styleConfig = {
     filename: 'main.css'
   },
   module: {
-    rules: [
-      {
-        test: /\.(css|sass|scss)$/,
-        include: [
-          path.resolve(__dirname, 'src/sass')
-        ],
-        use: ExtractTextPlugin.extract(
+    rules: [{
+        test: /\.s?[ac]ss$/,
+        use: [
           {
-            fallback: 'style-loader',
-            use: [
-              {
-                loader: 'css-loader',
-                options: {url: false}
+            loader: 'css-loader',
+            options: {
+              url: false
+            },
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  ['autoprefixer', { grid: true }]
+                ],
               },
-              {
-                loader: 'postcss-loader',
-                options: {
-                  plugins: () => [require('autoprefixer')({
-                    // 'browsers': ['> 1%', 'last 2 versions']
-                  })],
-                }
-              },
-              {
-                loader: 'sass-loader',
-                // options: {sourceMap: true}
-              },
-            ]
+            },
+          }, {
+            loader: 'sass-loader',
           }
-        )
+        ],
       },
       {
         test: /\.(eot|otf|ttf|woff2?|svg)$/,
@@ -145,36 +134,24 @@ let styleConfig = {
       },
     ]
   },
-  devtool: '#inline-source-map',
-  plugins: [
-    new ExtractTextPlugin('[name].css'),
-  ]
+  plugins: [],
+  optimization: {
+    minimize: false
+  }
 }
 
 console.log(process.env.NODE_ENV)
 
 if (process.env.NODE_ENV === 'production') {
-  const loaderOption = new webpack.LoaderOptionsPlugin({
-    minimize: true
-  })
 
-  scriptConfig.devtool = false
-  // http://vue-loader.vuejs.org/en/workflow/production.html
+  styleConfig.optimization.minimize = true
+  scriptConfig.plugins.push(new MiniCssExtractPlugin())
+
   scriptConfig.optimization.minimize = true
-  scriptConfig.optimization.minimizer = [
-    new UglifyJSPlugin({
-      uglifyOptions: {
-        compress: {
-          // warnings: false,
-          pure_funcs: ['console.debug', 'console.log', 'console.info', 'console.warn']
-        },
-        output: {
-          comments: false
-        }
-      }
-    })
-  ]
-  scriptConfig.plugins.push(loaderOption)
+  scriptConfig.plugins.push(new webpack.LoaderOptionsPlugin({
+    minimize: true
+  }))
+
 }
 
 module.exports = [scriptConfig, styleConfig]
