@@ -20,10 +20,10 @@
 // @import "../../node_modules/@fortawesome/fontawesome-free/scss/brands.scss";
 // @import "../../node_modules/ionicons/dist/scss/ionicons.scss";
 
-// @import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
-// @import "../../node_modules/ionicons/dist/css/ionicons.css";
-// @import "../../node_modules/yakuhanjp/dist/css/yakuhanjp.css";
-// @import "../../node_modules/yakuhanjp/dist/css/yakuhanmp.css";
+@import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "../../node_modules/ionicons/dist/css/ionicons.css";
+@import "../../node_modules/yakuhanjp/dist/css/yakuhanjp.css";
+@import "../../node_modules/yakuhanjp/dist/css/yakuhanmp.css";
 
 @import "./abstracts/_mixin-common.scss";
 @import "./abstracts/_mixin-background.scss";
